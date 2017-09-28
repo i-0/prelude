@@ -32,8 +32,31 @@
 (require 'expand-region)
 (global-set-key (kbd "C-@") 'er/expand-region)
 
+;; add additional packages to prelude-packages to be installed
+(setq my-packages '(smartscan clj-refactor))
+(prelude-require-packages my-packages)
+
 ;; smartscan emacs style *,# serch/movment commands
 ;; from: https://github.com/mickeynp/smart-scan
-;; (global-smartscan-mode 1)
+;; (global-smartscan-mode 1) ;; Warning this may break stuff, specially M-p in REPLs, Shells
 (global-set-key (kbd "C-*") 'smartscan-symbol-go-forward)
 (global-set-key (kbd "C-#") 'smartscan-symbol-go-backward)
+
+;; clj-refactor from:https://github.com/clojure-emacs/clj-refactor.el
+(require 'clj-refactor)
+
+(defun my-clojure-mode-hook ()
+  (clj-refactor-mode 1)
+  (yas-minor-mode 1) ; for adding require/use/import statements
+  ;; This choice of keybinding leaves cider-macroexpand-1 unbound
+  (cljr-add-keybindings-with-prefix "C-c C-m"))
+
+(add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
+
+(require 'cljr-helm)
+
+;; fix word behaviour
+(require 'misc)
+(global-set-key (kbd "M-f") 'forward-to-word)
+(global-set-key (kbd "M-n") 'forward-word)
+(global-set-key (kbd "M-p") 'backward-to-word)
