@@ -39,8 +39,15 @@
 ;; smartscan emacs style *,# serch/movment commands
 ;; from: https://github.com/mickeynp/smart-scan
 ;; (global-smartscan-mode 1) ;; Warning this may break stuff, specially M-p in REPLs, Shells
-(global-set-key (kbd "C-*") 'smartscan-symbol-go-forward)
-(global-set-key (kbd "C-#") 'smartscan-symbol-go-backward)
+;(global-set-key (kbd "C-*") 'smartscan-symbol-go-forward)
+;(global-set-key (kbd "C-#") 'smartscan-symbol-go-backward)
+
+;; same as smartscan trying to emulate */# movements, but working nice!
+(require 'highlight-symbol)
+(global-set-key (kbd "M-*") 'highlight-symbol)
+(global-set-key (kbd "C-*") 'highlight-symbol-next)
+(global-set-key (kbd "C-#") 'highlight-symbol-prev)
+;;(global-set-key [(meta f3)] 'highlight-symbol-query-replace)
 
 ;; clj-refactor from:https://github.com/clojure-emacs/clj-refactor.el
 (require 'clj-refactor)
