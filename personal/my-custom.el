@@ -67,3 +67,16 @@
 (global-set-key (kbd "M-f") 'forward-to-word)
 (global-set-key (kbd "M-n") 'forward-word)
 (global-set-key (kbd "M-p") 'backward-to-word)
+
+;; cycle flyspell dic through some languages
+(let ((langs '("english" "deutsch8" "espanol")))
+  (setq lang-ring (make-ring (length langs)))
+  (dolist (elem langs) (ring-insert lang-ring elem)))
+
+(defun cycle-ispell-languages ()
+  (interactive)
+  (let ((lang (ring-ref lang-ring -1)))
+    (ring-insert lang-ring lang)
+    (ispell-change-dictionary lang)))
+
+(global-set-key [f6] 'cycle-ispell-languages)
